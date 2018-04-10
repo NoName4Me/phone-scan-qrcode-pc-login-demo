@@ -7,9 +7,9 @@ const uuidv4 = require('uuid/v4');
 const hostname = '192.168.1.9';
 const port = 3002;
 
+let UUID, pollMap = {};
 const server = http.createServer((req, res) => {
     let URL = url.parse(req.url);
-    let UUID, pollMap = {};
     if (URL.pathname === '/') {
         res.statusCode = 200;
         UUID = uuidv4();
@@ -20,8 +20,9 @@ const server = http.createServer((req, res) => {
             <body><div style="text-align:center"><h1 id="tip" style="text-align:center;">Scan to login~</h1><img width=200 src="${data}"></img></div></body>
             <script>
             (function(){
-                fetch('http://${hostname}:${port}/poll', response => {
+                fetch('http://${hostname}:${port}/poll').then(response => {
                     document.querySelector('#tip').innerText='Welcome~';
+                    document.querySelector('#tip~img').style.display='none';
                 });
             })();
             </script>
@@ -29,14 +30,19 @@ const server = http.createServer((req, res) => {
         });
     } else if(URL.pathname === '/login') { 
         console.log(URL.query);
+
         pollMap[UUID].statusCode = 200;
-        pollMap[UUID].setHeader('Content-Type', 'text/html');
-        pollMap[UUID].end(`<body></body>`);
+        pollMap[UUID].end();
+        delete pollMap[UUID];
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end(`<h1>logined</h1>`)
     } else if (URL.path ==='/poll') {
         console.log('polling...');
         pollMap[UUID] = res;
+
         res.setTimeout(30000, () =>{
-            console.log('bye~');
+            console.log('timeout, bye~');
             res.statusCode = 500;
             res.end("timeout");
         });
