@@ -1,0 +1,23 @@
+{
+  "name": "phone-scan-qrcode-pc-login-demo",
+  "version": "1.0.0",
+  "description": "简单模拟移动端扫描PC上的二维码（比如登陆），然后PC端自动跳转的一个DEMO。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoName4Me/phone-scan-qrcode-pc-login-demo.git"
+  },
+  "author": "Jonge",
+  "license": "Public",
+  "bugs": {
+    "url": "https://github.com/NoName4Me/phone-scan-qrcode-pc-login-demo/issues"
+  },
+  "homepage": "https://github.com/NoName4Me/phone-scan-qrcode-pc-login-demo#readme",
+  "dependencies": {
+    "qrcode": "^1.2.0",
+    "uuid": "^3.2.1"
+  }
+}
